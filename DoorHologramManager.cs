@@ -17,7 +17,16 @@ namespace SecurityDoorHologramOverhaul
             var userConfig = Path.Combine(Paths.ConfigPath, "SecurityDoorHologram.json");
             if (File.Exists(userConfig))
             {
-                _config = JSON.Deserialize<DoorHologramConfig>(File.ReadAllText(userConfig));
+                _userConfig = JSON.Deserialize<DoorHologramUserConfig>(File.ReadAllText(userConfig));
+            }
+
+            if (MTFOUtil.IsLoaded && MTFOUtil.HasCustomContent)
+            {
+                var rundownConfig = Path.Combine(MTFOUtil.CustomPath, "SecurityDoorHologram.json");
+                if (File.Exists(rundownConfig))
+                {
+                    _rundownConfig = JSON.Deserialize<DoorHologramRundownConfig>(File.ReadAllText(rundownConfig));
+                }
             }
         }
 
@@ -28,29 +37,38 @@ namespace SecurityDoorHologramOverhaul
 
             if (updater.IsSetup)
             {
-                updater.SetDefaultState(_config.DefaultState);
+                updater.SetDefaultState(_userConfig.DefaultState);
 
-                foreach (var setting in _config.DefaultSettings)
-                {
+                foreach (var setting in _userConfig.DefaultSettings)
                     updater.SetStateData(setting.Target, setting);
-                }
 
-                foreach (var levelOverride in _config.LevelOverrides)
+                if (_rundownConfig != null)
                 {
-                    levelOverride.TryAddSettings(door, updater);
-                }
+                    updater.SetDefaultState(_rundownConfig.DefaultState);
 
-                foreach (var puzzleOverride in _config.ChainedPuzzleOverrides)
-                {
-                    puzzleOverride.TryAddSettings(door, updater);
+                    foreach (var setting in _rundownConfig.DefaultSettings)
+                        updater.SetStateData(setting.Target, setting);
+
+                    foreach (var levelOverride in _rundownConfig.LevelOverrides)
+                        levelOverride.TryAddSettings(door, updater);
+
+                    foreach (var puzzleOverride in _rundownConfig.ChainedPuzzleOverrides)
+                        puzzleOverride.TryAddSettings(door, updater);
                 }
             }
         }
 
-        private static DoorHologramConfig _config = new ();
+        private static DoorHologramUserConfig _userConfig = new ();
+        private static DoorHologramRundownConfig _rundownConfig = null;
     }
 
-    public sealed class DoorHologramConfig
+    public sealed class DoorHologramUserConfig
+    {
+        public DoorStateType DefaultState { get; set; } = DoorStateType.Locked_Alarm;
+        public DoorStateData[] DefaultSettings { get; set; } = Array.Empty<DoorStateData>();
+    }
+
+    public sealed class DoorHologramRundownConfig
     {
         public DoorStateType DefaultState { get; set; } = DoorStateType.Locked_Alarm;
         public DoorStateData[] DefaultSettings { get; set; } = Array.Empty<DoorStateData>();

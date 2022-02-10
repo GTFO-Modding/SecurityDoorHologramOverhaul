@@ -32,34 +32,61 @@ namespace SecurityDoorHologramOverhaul
         private void AssetLoaded()
         {
             var texturesPath = Path.Combine(Paths.ConfigPath, "Assets", "Textures", "SecDoorHolograms");
+            var textures = GetTextureFiles(texturesPath);
 
-            if (!Directory.Exists(texturesPath))
-                Directory.CreateDirectory(texturesPath);
+            foreach (var textureFile in textures)
+            {
+                TryAddTextureFile(textureFile, isRundownFile: false);  
+            }
 
-            var textures = Directory.GetFiles(texturesPath, "*.*", SearchOption.TopDirectoryOnly)
+            if (MTFOUtil.IsLoaded && MTFOUtil.HasCustomContent)
+            {
+                var customTexturesPath = Path.Combine(MTFOUtil.CustomPath, "Textures", "SecDoorHolograms");
+                var customTextures = GetTextureFiles(customTexturesPath);
+                foreach (var textureFile in customTextures)
+                {
+                    TryAddTextureFile(textureFile, isRundownFile: true);
+                }
+            }
+        }
+
+        private string[] GetTextureFiles(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            var textures = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
                 .Where(x =>
                     x.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase) ||
                     x.EndsWith(".jpg", StringComparison.InvariantCultureIgnoreCase) ||
                     x.EndsWith(".jpeg", StringComparison.InvariantCultureIgnoreCase))
                 .ToArray();
 
-            foreach (var textureFile in textures)
+            return textures;
+        }
+
+        private void TryAddTextureFile(string path, bool isRundownFile = false)
+        {
+            if (!File.Exists(path))
+                return;
+
+            var bytes = File.ReadAllBytes(path);
+            var newTexture = new Texture2D(1, 1);
+            if (!ImageConversion.LoadImage(newTexture, bytes))
             {
-                if (!File.Exists(textureFile))
-                    continue;
-
-                var bytes = File.ReadAllBytes(textureFile);
-                var newTexture = new Texture2D(1, 1);
-                if (!ImageConversion.LoadImage(newTexture, bytes))
-                {
-                    GameObject.Destroy(newTexture);
-                    continue;
-                }
-
-                newTexture.name = Path.GetFileNameWithoutExtension(textureFile);
-                newTexture.hideFlags = HideFlags.HideAndDontSave;
-                Textures.Add(newTexture.name, newTexture);
+                GameObject.Destroy(newTexture);
+                return;
             }
+
+            var newName = Path.GetFileNameWithoutExtension(path);
+            if (isRundownFile)
+            {
+                newName = $"Custom/{path}";
+            }
+            newTexture.name = newName;
+            
+            newTexture.hideFlags = HideFlags.HideAndDontSave;
+            Textures.Add(newName, newTexture);
         }
 
         private Harmony _harmonyInstance;
