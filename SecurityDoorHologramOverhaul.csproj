@@ -41,6 +41,7 @@
     <Compile Include="Utils\ColorConverter.cs" />
     <Compile Include="Utils\JSON.cs" />
     <Compile Include="Utils\MTFOPartialDataUtil.cs" />
+    <Compile Include="Utils\MTFOUtil.cs" />
     <Compile Include="Utils\RegexUtil.cs" />
     <None Include="Dependencies.props" />
     <None Include="GameFolder.props" />

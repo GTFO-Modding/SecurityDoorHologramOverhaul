@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.IL2CPP;
+using GTFO.API;
 using HarmonyLib;
+using SecurityDoorHologramOverhaul.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,6 +12,10 @@ using UnityEngine;
 namespace SecurityDoorHologramOverhaul
 {
     [BepInPlugin("SecurityDoorHologramOverhaul", "SecurityDoorHologramOverhaul", "1.0.0")]
+    [BepInProcess("GTFO.exe")]
+    [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class EntryPoint : BasePlugin
     {
         public override void Load()
@@ -20,7 +26,7 @@ namespace SecurityDoorHologramOverhaul
             _harmonyInstance.PatchAll();
 
             DoorHologramManager.ReadConfig();
-            AssetShards.AssetShardManager.add_OnStartupAssetsLoaded((Action)AssetLoaded);
+            AssetAPI.OnStartupAssetsLoaded += AssetLoaded;
         }
 
         private void AssetLoaded()

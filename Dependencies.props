@@ -33,4 +33,9 @@
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
   </ItemGroup>
+
+  <!--GTFO API-->
+  <ItemGroup>
+    <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
+  </ItemGroup>
 </Project>
