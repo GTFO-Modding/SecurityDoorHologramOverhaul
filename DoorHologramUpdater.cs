@@ -65,7 +65,6 @@ namespace SecurityDoorHologramOverhaul
             var renderers = gameObject.GetComponentsInChildren<MeshRenderer>(true);
             foreach (var renderer in renderers)
             {
-                Logger.Info($"Found Renderer: {renderer.name} {renderer.material.shader.name}");
                 if (renderer.material.shader.name.Contains("Display_Hologram", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (hologramChild == null)
@@ -73,7 +72,6 @@ namespace SecurityDoorHologramOverhaul
                         hologramChild = renderer.gameObject.transform.parent;
                     }
 
-                    Logger.Info($" - Disabled: {renderer.name}");
                     renderer.enabled = false;
                     renderer.forceRenderingOff = true;
                 }
@@ -95,7 +93,6 @@ namespace SecurityDoorHologramOverhaul
             _door.m_sync.add_OnDoorStateChange((Action<pDoorState, bool>)OnStateChange);
             _door.m_locks.add_OnChainedPuzzleSolved(new Action(()=> { OnStateChange(); }));
             IsSetup = true;
-            Logger.Info($"Fully Setup: {secDoor.name}");
         }
 
         [HideFromIl2Cpp]
