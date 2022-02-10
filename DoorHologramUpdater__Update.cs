@@ -86,6 +86,7 @@ namespace SecurityDoorHologramOverhaul
             }
             else //Time Done
             {
+                colorFade._timer = 0.0f;
                 colorFade._previousColor = colorFade.Colors[colorFade._currentIndex];
                 colorFade.NextIndex();
             }
