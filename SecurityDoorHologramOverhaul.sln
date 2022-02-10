@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityDoorHologramOverhaul", "SecurityDoorHologramOverhaul.csproj", "{3C9353AC-6692-4138-9572-2847380AFC2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C9353AC-6692-4138-9572-2847380AFC2B}.Debug|x64.ActiveCfg = Debug|x64
+		{3C9353AC-6692-4138-9572-2847380AFC2B}.Debug|x64.Build.0 = Debug|x64
+		{3C9353AC-6692-4138-9572-2847380AFC2B}.Release|x64.ActiveCfg = Release|x64
+		{3C9353AC-6692-4138-9572-2847380AFC2B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD1CCFB0-A004-4D08-9C7A-91EB203A23EC}
+	EndGlobalSection
+EndGlobal
