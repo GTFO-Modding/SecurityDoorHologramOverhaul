@@ -81,7 +81,7 @@ namespace SecurityDoorHologramOverhaul
             var newName = Path.GetFileNameWithoutExtension(path);
             if (isRundownFile)
             {
-                newName = $"Custom/{path}";
+                newName = $"Custom/{newName}";
             }
             newTexture.name = newName;
             
