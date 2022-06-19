@@ -2,11 +2,11 @@
 using BepInEx.IL2CPP;
 using GTFO.API;
 using HarmonyLib;
+using Il2CppInterop.Runtime.Injection;
 using SecurityDoorHologramOverhaul.Utils;
 using System;
 using System.IO;
 using System.Linq;
-using UnhollowerRuntimeLib;
 using UnityEngine;
 
 namespace SecurityDoorHologramOverhaul

@@ -1,9 +1,7 @@
-﻿using LevelGeneration;
+﻿using Il2CppInterop.Runtime.Attributes;
+using LevelGeneration;
 using SecurityDoorHologramOverhaul.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace SecurityDoorHologramOverhaul

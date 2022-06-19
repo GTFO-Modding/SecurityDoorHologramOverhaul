@@ -1,5 +1,5 @@
-﻿using LevelGeneration;
-using UnhollowerBaseLib.Attributes;
+﻿using Il2CppInterop.Runtime.Attributes;
+using LevelGeneration;
 using UnityEngine;
 
 namespace SecurityDoorHologramOverhaul
